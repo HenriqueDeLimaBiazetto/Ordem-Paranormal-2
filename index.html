@@ -269,6 +269,9 @@
                 <button id="tab-btn-audio" onclick="switchDrawerTab('audio')" class="py-2 rounded-lg text-[10px] font-semibold flex flex-col sm:flex-row items-center justify-center gap-1 text-slate-400 hover:text-slate-200 transition">
                     <i class="fa-solid fa-music"></i><span>Áudio</span>
                 </button>
+                <button id="tab-btn-media" onclick="switchDrawerTab('media')" class="py-2 rounded-lg text-[10px] font-semibold flex flex-col sm:flex-row items-center justify-center gap-1 text-slate-400 hover:text-slate-200 transition">
+                    <i class="fa-solid fa-images"></i><span>Media</span>
+                </button>
             </div>
 
             <!-- TAB 1: MAPS & FOG OF WAR -->
@@ -278,6 +281,11 @@
                     <button onclick="openModal('modal-new-map')" class="px-3 py-1.5 rounded-xl bg-matteGold hover:bg-goldHover text-obsidian font-bold text-xs flex items-center gap-1.5 transition">
                         <i class="fa-solid fa-plus"></i> Novo Mapa
                     </button>
+                </div>
+                <!-- Search Maps -->
+                <div class="relative">
+                    <i class="fa-solid fa-magnifying-glass absolute left-2.5 top-1/2 -translate-y-1/2 text-slate-500 text-xs"></i>
+                    <input type="text" id="search-maps-input" oninput="setSearchFilter('maps', this.value)" placeholder="Buscar mapa..." class="w-full bg-obsidian border border-slateBorder focus:border-matteGold rounded-xl pl-8 pr-3 py-2 text-xs text-slate-100 outline-none placeholder:text-slate-500">
                 </div>
 
                 <!-- Grid Settings -->
@@ -326,6 +334,11 @@
                         <i class="fa-solid fa-plus"></i> Novo Token
                     </button>
                 </div>
+                <!-- Search Tokens -->
+                <div class="relative">
+                    <i class="fa-solid fa-magnifying-glass absolute left-2.5 top-1/2 -translate-y-1/2 text-slate-500 text-xs"></i>
+                    <input type="text" id="search-tokens-input" oninput="setSearchFilter('tokens', this.value)" placeholder="Buscar token..." class="w-full bg-obsidian border border-slateBorder focus:border-matteGold rounded-xl pl-8 pr-3 py-2 text-xs text-slate-100 outline-none placeholder:text-slate-500">
+                </div>
                 <div id="tokens-library-list" class="space-y-2"></div>
             </div>
 
@@ -369,6 +382,11 @@
                         </button>
                     </div>
                 </div>
+                <!-- Search Clues -->
+                <div class="relative">
+                    <i class="fa-solid fa-magnifying-glass absolute left-2.5 top-1/2 -translate-y-1/2 text-slate-500 text-xs"></i>
+                    <input type="text" id="search-clues-input" oninput="setSearchFilter('clues', this.value)" placeholder="Buscar pista..." class="w-full bg-obsidian border border-slateBorder focus:border-matteGold rounded-xl pl-8 pr-3 py-2 text-xs text-slate-100 outline-none placeholder:text-slate-500">
+                </div>
                 <div id="clues-library-list" class="space-y-2"></div>
             </div>
 
@@ -379,6 +397,11 @@
                     <button onclick="openModal('modal-new-audio')" class="px-3 py-1.5 rounded-xl bg-matteGold hover:bg-goldHover text-obsidian font-bold text-xs flex items-center gap-1 transition">
                         <i class="fa-solid fa-plus"></i> Adicionar
                     </button>
+                </div>
+                <!-- Search Audio -->
+                <div class="relative">
+                    <i class="fa-solid fa-magnifying-glass absolute left-2.5 top-1/2 -translate-y-1/2 text-slate-500 text-xs"></i>
+                    <input type="text" id="search-audio-input" oninput="setSearchFilter('audio', this.value)" placeholder="Buscar áudio..." class="w-full bg-obsidian border border-slateBorder focus:border-matteGold rounded-xl pl-8 pr-3 py-2 text-xs text-slate-100 outline-none placeholder:text-slate-500">
                 </div>
 
                 <!-- Now Playing Controls -->
@@ -404,6 +427,57 @@
 
                 <!-- Tracks List -->
                 <div id="audio-library-list" class="space-y-2"></div>
+            </div>
+
+            <!-- TAB 5: MEDIA VIEWER (GM ONLY) -->
+            <div id="panel-media" class="hidden flex-1 flex-col overflow-y-auto p-3 space-y-3">
+                <div class="flex items-center justify-between">
+                    <h2 class="text-xs font-bold uppercase tracking-wider text-slate-300 flex items-center gap-2">
+                        <i class="fa-solid fa-images text-matteGold"></i> Visualizador de Media
+                    </h2>
+                    <button onclick="loadMediaFromManifest(true)" class="px-2.5 py-1 rounded-lg bg-slatePanel hover:bg-slate-700 border border-matteGold/40 text-matteGold text-[11px] font-bold flex items-center gap-1.5 transition" title="Recarregar manifest.json">
+                        <i class="fa-solid fa-rotate"></i> Recarregar
+                    </button>
+                </div>
+                <p class="text-[11px] text-slate-500 bg-obsidian/80 border border-slateBorder rounded-xl p-2.5">
+                    <i class="fa-solid fa-info-circle text-matteGold mr-1.5"></i>
+                    Visualize todas as imagens carregadas organizadas por categoria. Funciona melhor quando o site é servido via servidor local (ver instruções abaixo).
+                </p>
+
+                <!-- Server Instructions -->
+                <div class="bg-amber-950/30 border border-amber-700/40 rounded-xl p-3 space-y-2">
+                    <p class="text-xs font-bold text-amber-300 flex items-center gap-1.5">
+                        <i class="fa-solid fa-server"></i> Como rodar localmente para ver as imagens:
+                    </p>
+                    <div class="space-y-1 text-[11px] text-slate-300 font-mono bg-obsidian/90 border border-slateBorder rounded-lg p-2.5">
+                        <p><span class="text-matteGold">Opção 1 (Python):</span> <code>python -m http.server 8000</code> na pasta do projeto, depois abra <code>http://localhost:8000</code></p>
+                        <p><span class="text-matteGold">Opção 2 (Node):</span> <code>npx serve</code> na pasta do projeto</p>
+                        <p><span class="text-matteGold">Opção 3 (VS Code):</span> Extensão "Live Server" → Clique direito no index.html → "Open with Live Server"</p>
+                    </div>
+                    <p class="text-[10px] text-slate-500">Ao abrir direto pelo arquivo (file://), o navegador bloqueia o carregamento de imagens locais por segurança (CORS).</p>
+                </div>
+
+                <!-- Media Grid by Category -->
+                <div id="media-viewer-tabs" class="flex gap-1 mb-3 flex-wrap">
+                    <button onclick="switchMediaViewerTab('all')" id="mediatab-all" class="px-2.5 py-1 rounded-lg bg-matteGold text-obsidian text-[10px] font-bold">Todas</button>
+                    <button onclick="switchMediaViewerTab('map')" id="mediatab-map" class="px-2.5 py-1 rounded-lg bg-slatePanel text-slate-300 text-[10px] font-semibold">Mapas</button>
+                    <button onclick="switchMediaViewerTab('token')" id="mediatab-token" class="px-2.5 py-1 rounded-lg bg-slatePanel text-slate-300 text-[10px] font-semibold">Tokens</button>
+                    <button onclick="switchMediaViewerTab('clue')" id="mediatab-clue" class="px-2.5 py-1 rounded-lg bg-slatePanel text-slate-300 text-[10px] font-semibold">Pistas</button>
+                    <button onclick="switchMediaViewerTab('audio')" id="mediatab-audio" class="px-2.5 py-1 rounded-lg bg-slatePanel text-slate-300 text-[10px] font-semibold">Áudio</button>
+                </div>
+
+                <div id="media-viewer-grid" class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-2 max-h-[calc(100vh-320px)] overflow-y-auto pr-1"></div>
+
+                <!-- Image Modal Preview -->
+                <div id="media-preview-modal" class="hidden fixed inset-0 z-50 bg-black/90 backdrop-blur-sm flex items-center justify-center p-4">
+                    <div class="relative max-w-4xl max-h-[90vh] w-full">
+                        <button onclick="closeMediaPreview()" class="absolute -top-10 right-0 w-8 h-8 rounded-full bg-slatePanel hover:bg-slate-700 text-slate-200 flex items-center justify-center z-10"><i class="fa-solid fa-xmark"></i></button>
+                        <img id="media-preview-img" src="" alt="Preview" class="max-w-full max-h-[90vh] object-contain rounded-lg shadow-2xl">
+                        <div class="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/90 to-transparent p-4 text-center">
+                            <p id="media-preview-info" class="text-sm text-slate-200 font-mono"></p>
+                        </div>
+                    </div>
+                </div>
             </div>
         </aside>
     </main>
@@ -1338,7 +1412,7 @@
         };
 
         window.switchDrawerTab = function(tab) {
-            const tabs = ['maps', 'tokens', 'sheets', 'clues', 'audio'];
+            const tabs = ['maps', 'tokens', 'sheets', 'clues', 'audio', 'media'];
             tabs.forEach(t => {
                 const panel = document.getElementById(`panel-${t}`);
                 const btn = document.getElementById(`tab-btn-${t}`);
@@ -1353,6 +1427,12 @@
                     btn.className = 'py-2 rounded-lg text-[10px] font-semibold flex flex-col sm:flex-row items-center justify-center gap-1 text-slate-400 hover:text-slate-200 transition';
                 }
             });
+            // Clear search when switching tabs
+            clearSearchInputs();
+            // Render media viewer when switching to media tab
+            if (tab === 'media') {
+                renderMediaViewerGrid();
+            }
         };
 
         // =====================================================================
@@ -1710,10 +1790,17 @@
             const fogList = document.getElementById('map-fog-zones-list');
             if (!list) return;
 
+            const searchTerm = searchState.maps || '';
+            const filteredMaps = state.maps.filter(m =>
+                !searchTerm || (m.name || '').toLowerCase().includes(searchTerm)
+            );
+
             if (!state.maps.length) {
                 list.innerHTML = `<p class="text-[11px] text-slate-500 text-center py-4">Nenhum mapa cadastrado ainda.</p>`;
+            } else if (!filteredMaps.length) {
+                list.innerHTML = `<p class="text-[11px] text-slate-500 text-center py-4">Nenhum mapa encontrado para "<span class="text-matteGold">${searchTerm}</span>".</p>`;
             } else {
-                list.innerHTML = state.maps.map(m => {
+                list.innerHTML = filteredMaps.map(m => {
                     const isActive = m.id === state.activeMapId;
                     return `
                         <div class="flex items-center justify-between gap-2 p-2 rounded-xl border ${isActive ? 'bg-slatePanel border-matteGold' : 'bg-obsidian/80 border-slateBorder'}">
@@ -1956,11 +2043,21 @@
         function renderTokensLibrary() {
             const list = document.getElementById('tokens-library-list');
             if (!list) return;
+
+            const searchTerm = searchState.tokens || '';
+            const filteredTemplates = state.tokenTemplates.filter(tpl =>
+                !searchTerm || (tpl.name || '').toLowerCase().includes(searchTerm)
+            );
+
             if (!state.tokenTemplates.length) {
                 list.innerHTML = `<p class="text-[11px] text-slate-500 text-center py-6">Nenhum token configurado ainda. Clique em <strong>+ Novo Token</strong>.</p>`;
                 return;
             }
-            list.innerHTML = state.tokenTemplates.map(tpl => {
+            if (!filteredTemplates.length) {
+                list.innerHTML = `<p class="text-[11px] text-slate-500 text-center py-6">Nenhum token encontrado para "<span class="text-matteGold">${searchTerm}</span>".</p>`;
+                return;
+            }
+            list.innerHTML = filteredTemplates.map(tpl => {
                 const variants = tpl.variants || [];
                 const activeVar = variants.find(v => v.id === tpl.activeVariantId);
                 const previewSrc = activeVar ? activeVar.src : tpl.src;
@@ -2227,11 +2324,21 @@
         function renderCluesLibrary() {
             const list = document.getElementById('clues-library-list');
             if (!list) return;
+
+            const searchTerm = searchState.clues || '';
+            const filteredClues = state.clues.filter(c =>
+                !searchTerm || (c.title || '').toLowerCase().includes(searchTerm) || (c.text || '').toLowerCase().includes(searchTerm)
+            );
+
             if (!state.clues.length) {
                 list.innerHTML = `<p class="text-[11px] text-slate-500 text-center py-6">Nenhuma pista cadastrada ainda.</p>`;
                 return;
             }
-            list.innerHTML = state.clues.map(c => `
+            if (!filteredClues.length) {
+                list.innerHTML = `<p class="text-[11px] text-slate-500 text-center py-6">Nenhuma pista encontrada para "<span class="text-matteGold">${searchTerm}</span>".</p>`;
+                return;
+            }
+            list.innerHTML = filteredClues.map(c => `
                 <div class="bg-obsidian/80 border ${c.revealed ? 'border-matteGold/60' : 'border-slateBorder'} rounded-xl p-2.5 space-y-2">
                     <div class="flex items-start justify-between gap-2">
                         <div class="min-w-0">
@@ -2876,11 +2983,21 @@
         function renderAudioLibrary() {
             const list = document.getElementById('audio-library-list');
             if (!list) return;
+
+            const searchTerm = searchState.audio || '';
+            const filteredTracks = state.audioTracks.filter(t =>
+                !searchTerm || (t.title || '').toLowerCase().includes(searchTerm)
+            );
+
             if (!state.audioTracks.length) {
                 list.innerHTML = `<p class="text-[11px] text-slate-500 text-center py-6">Nenhuma música adicionada ainda.</p>`;
                 return;
             }
-            list.innerHTML = state.audioTracks.map(t => {
+            if (!filteredTracks.length) {
+                list.innerHTML = `<p class="text-[11px] text-slate-500 text-center py-6">Nenhum áudio encontrado para "<span class="text-matteGold">${searchTerm}</span>".</p>`;
+                return;
+            }
+            list.innerHTML = filteredTracks.map(t => {
                 const active = t.id === state.activeTrackId;
                 return `
                     <div class="flex items-center justify-between gap-2 p-2.5 rounded-xl border ${active ? 'bg-slatePanel border-matteGold' : 'bg-obsidian/80 border-slateBorder'}">
@@ -2893,6 +3010,224 @@
                 `;
             }).join('');
         }
+
+        // =====================================================================
+        // MEDIA VIEWER FUNCTIONS
+        // =====================================================================
+        let mediaViewerTab = 'all';
+        // Search state for GM panels
+        const searchState = {
+            maps: '',
+            tokens: '',
+            clues: '',
+            audio: ''
+        };
+
+        // Search filter functions
+        window.setSearchFilter = function(type, value) {
+            searchState[type] = (value || '').toLowerCase().trim();
+            // Re-render the appropriate panel
+            switch (type) {
+                case 'maps':
+                    renderMapsLibrary();
+                    break;
+                case 'tokens':
+                    renderTokensLibrary();
+                    break;
+                case 'clues':
+                    renderCluesLibrary();
+                    break;
+                case 'audio':
+                    renderAudioLibrary();
+                    break;
+            }
+        };
+
+        function clearSearchInputs() {
+            searchState.maps = '';
+            searchState.tokens = '';
+            searchState.clues = '';
+            searchState.audio = '';
+            const mapInput = document.getElementById('search-maps-input');
+            const tokenInput = document.getElementById('search-tokens-input');
+            const clueInput = document.getElementById('search-clues-input');
+            const audioInput = document.getElementById('search-audio-input');
+            if (mapInput) mapInput.value = '';
+            if (tokenInput) tokenInput.value = '';
+            if (clueInput) clueInput.value = '';
+            if (audioInput) audioInput.value = '';
+        }
+
+        window.switchMediaViewerTab = function(tab) {
+            mediaViewerTab = tab;
+            const tabs = ['all', 'map', 'token', 'clue', 'audio'];
+            tabs.forEach(t => {
+                const btn = document.getElementById(`mediatab-${t}`);
+                if (btn) {
+                    if (t === tab) {
+                        btn.className = 'px-2.5 py-1 rounded-lg bg-matteGold text-obsidian text-[10px] font-bold';
+                    } else {
+                        btn.className = 'px-2.5 py-1 rounded-lg bg-slatePanel text-slate-300 text-[10px] font-semibold';
+                    }
+                }
+            });
+            renderMediaViewerGrid();
+        };
+
+        function getMediaItemsByCategory() {
+            const items = [];
+
+            // Maps
+            state.maps.forEach(m => {
+                if (m.src) {
+                    items.push({
+                        id: m.id,
+                        category: 'map',
+                        title: m.name,
+                        src: m.src,
+                        type: 'image'
+                    });
+                }
+            });
+
+            // Tokens
+            state.tokenTemplates.forEach(t => {
+                if (t.src) {
+                    items.push({
+                        id: t.id,
+                        category: 'token',
+                        title: t.name,
+                        src: t.src,
+                        type: 'image'
+                    });
+                    // Variants
+                    (t.variants || []).forEach(v => {
+                        if (v.src) {
+                            items.push({
+                                id: v.id,
+                                category: 'token',
+                                title: `${t.name} — ${v.label}`,
+                                src: v.src,
+                                type: 'image'
+                            });
+                        }
+                    });
+                }
+            });
+
+            // Clues
+            state.clues.forEach(c => {
+                if (c.img) {
+                    items.push({
+                        id: c.id,
+                        category: 'clue',
+                        title: c.title,
+                        src: c.img,
+                        type: 'image'
+                    });
+                }
+            });
+
+            // Audio
+            state.audioTracks.forEach(a => {
+                if (a.src) {
+                    items.push({
+                        id: a.id,
+                        category: 'audio',
+                        title: a.title,
+                        src: a.src,
+                        type: 'audio'
+                    });
+                }
+            });
+
+            return items;
+        }
+
+        function renderMediaViewerGrid() {
+            const grid = document.getElementById('media-viewer-grid');
+            if (!grid) return;
+
+            const items = getMediaItemsByCategory();
+            const filtered = mediaViewerTab === 'all' ? items : items.filter(i => i.category === mediaViewerTab);
+
+            if (!filtered.length) {
+                const categoryNames = { map: 'Mapas', token: 'Tokens', clue: 'Pistas', audio: 'Áudio' };
+                grid.innerHTML = `<p class="col-span-full text-xs text-slate-400 text-center py-8">
+                    Nenhum item em <strong>${categoryNames[mediaViewerTab] || 'esta categoria'}</strong>.
+                    ${mediaViewerTab !== 'all' ? 'Carregue arquivos na aba <strong>Media</strong> da barra superior.' : ''}
+                </p>`;
+                return;
+            }
+
+            grid.innerHTML = filtered.map(item => {
+                const isAudio = item.type === 'audio';
+                const catColors = {
+                    map: 'border-blue-500/50 bg-blue-950/20',
+                    token: 'border-emerald-500/50 bg-emerald-950/20',
+                    clue: 'border-amber-500/50 bg-amber-950/20',
+                    audio: 'border-purple-500/50 bg-purple-950/20'
+                };
+                const catColor = catColors[item.category] || 'border-slateBorder';
+
+                if (isAudio) {
+                    return `
+                        <div class="group relative bg-obsidian/80 border ${catColor} rounded-xl p-2.5 flex flex-col items-center gap-2 cursor-pointer"
+                             onclick="playAudioTrack('${item.id}')">
+                            <div class="w-full aspect-square flex items-center justify-center bg-black/50 rounded-lg">
+                                <i class="fa-solid fa-file-audio text-3xl text-purple-400"></i>
+                            </div>
+                            <p class="text-[10px] font-semibold text-slate-100 truncate w-full text-center">${item.title}</p>
+                            <span class="text-[9px] text-slate-500 px-1.5 py-0.5 rounded bg-black/50">Áudio</span>
+                        </div>
+                    `;
+                }
+
+                return `
+                    <div class="group relative bg-obsidian/80 border ${catColor} rounded-xl p-2.5 flex flex-col items-center gap-2 cursor-pointer"
+                         onclick="openMediaPreview('${item.src}', '${item.title.replace(/'/g, "\\'")}', '${item.category}')">
+                        <div class="w-full aspect-square relative overflow-hidden rounded-lg bg-black/50">
+                            <img src="${item.src}"
+                                 alt="${item.title}"
+                                 class="w-full h-full object-contain transition-transform duration-300 group-hover:scale-105"
+                                 onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';"
+                                 loading="lazy">
+                            <div class="hidden absolute inset-0 flex items-center justify-center bg-red-950/50">
+                                <i class="fa-solid fa-image text-red-400 text-2xl"></i>
+                            </div>
+                        </div>
+                        <p class="text-[10px] font-semibold text-slate-100 truncate w-full text-center">${item.title}</p>
+                        <span class="text-[9px] text-slate-500 px-1.5 py-0.5 rounded bg-black/50 capitalize">${item.category === 'map' ? 'Mapa' : item.category === 'token' ? 'Token' : 'Pista'}</span>
+                    </div>
+                `;
+            }).join('');
+        }
+
+        window.openMediaPreview = function(src, title, category) {
+            const modal = document.getElementById('media-preview-modal');
+            const img = document.getElementById('media-preview-img');
+            const info = document.getElementById('media-preview-info');
+            if (!modal || !img || !info) return;
+
+            img.src = src;
+            const catLabels = { map: 'Mapa', token: 'Token', clue: 'Pista', audio: 'Áudio' };
+            info.textContent = `${catLabels[category] || category} • ${title}`;
+            modal.classList.remove('hidden');
+        };
+
+        window.closeMediaPreview = function() {
+            const modal = document.getElementById('media-preview-modal');
+            const img = document.getElementById('media-preview-img');
+            if (modal) modal.classList.add('hidden');
+            if (img) img.src = '';
+        };
+
+        // Close preview on Escape key
+        document.addEventListener('keydown', e => {
+            if (e.key === 'Escape') {
+                closeMediaPreview();
+            }
+        });
 
         // Calculator (+ and -)
         let calcCurrent = '0';
@@ -3324,6 +3659,10 @@
             renderGmSheetsPanel();
             updateRevealedCluesBadge();
             updateTokenActionBar();
+            // Render media viewer if panel is visible
+            if (!document.getElementById('panel-media')?.classList.contains('hidden')) {
+                renderMediaViewerGrid();
+            }
         }
 
         async function initApp() {
