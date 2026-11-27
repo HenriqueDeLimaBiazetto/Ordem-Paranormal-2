@@ -1,0 +1,76 @@
+{
+  "files": [
+    {
+      "name": "Abertura (Hexatombe)",
+      "path": "Abertura (Hexatombe)_spotdown.org.mp3",
+      "category": "audio",
+      "description": "Abertura da campanha"
+    },
+    {
+      "name": "Curiosidade (Cidade)",
+      "path": "Curiosidade (Cidade)_spotdown.org.mp3",
+      "category": "audio",
+      "description": "Tema de curiosidade/investigação urbana"
+    },
+    {
+      "name": "For Whom The Bell Tolls - Remastered",
+      "path": "For Whom The Bell Tolls - Remastered_spotdown.org.mp3",
+      "category": "audio",
+      "description": "Metallica - Tema épico para momentos tensos"
+    },
+    {
+      "name": "Lar Abandonado",
+      "path": "Lar Abandonado_spotdown.org.mp3",
+      "category": "audio",
+      "description": "Ambiente de lar abandonado/assombrado"
+    },
+    {
+      "name": "Master Of Puppets",
+      "path": "Master Of Puppets_spotdown.org.mp3",
+      "category": "audio",
+      "description": "Metallica - Combate intenso/clímax"
+    },
+    {
+      "name": "Máscara",
+      "path": "Máscara_spotdown.org.mp3",
+      "category": "audio",
+      "description": "Tema de mistério/identidades ocultas"
+    },
+    {
+      "name": "Ride The Lightning - Remastered",
+      "path": "Ride The Lightning - Remastered_spotdown.org.mp3",
+      "category": "audio",
+      "description": "Metallica - Ação/perseguição"
+    },
+    {
+      "name": "Sentiram Saudades",
+      "path": "Sentiram Saudades__spotdown.org.mp3",
+      "category": "audio",
+      "description": "Tema emocional/nostalgia"
+    },
+    {
+      "name": "Vermelho",
+      "path": "Vermelho_spotdown.org.mp3",
+      "category": "audio",
+      "description": "Tema de perigo/sangue/alerta"
+    },
+    {
+      "name": "Diretoria IA",
+      "path": "diretoria IA.png",
+      "category": "map",
+      "description": "Cena: Diretoria IA"
+    },
+    {
+      "name": "Diretoria P",
+      "path": "Diretoria P.jpg",
+      "category": "map",
+      "description": "Cena: Diretoria P"
+    },
+    {
+      "name": "Park Token",
+      "path": "Park Token.png",
+      "category": "token",
+      "description": "Token: Park Token"
+    }
+  ]
+}
